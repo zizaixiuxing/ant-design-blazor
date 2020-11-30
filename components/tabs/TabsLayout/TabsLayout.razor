@@ -1,0 +1,15 @@
+﻿@namespace AntDesign
+@inherits LayoutComponentBase
+
+<Tabs @bind-ActiveKey="_activeKey">
+    @foreach (var pane in _tabPages)
+    {
+        <TabPane Key="@pane.Key">
+            <Tab>@pane.Value._title</Tab>
+            <ChildContent>
+                @pane.Value._pageBody
+            </ChildContent>
+        </TabPane>
+    }
+</Tabs>
+
