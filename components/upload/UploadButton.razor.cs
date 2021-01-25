@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
 namespace AntDesign.Internal
 {
-    public partial class UploadButton : AntComponentBase
+    public partial class UploadButton : AntDomComponentBase
     {
         [CascadingParameter]
         public Upload Upload { get; set; }
@@ -56,6 +57,9 @@ namespace AntDesign.Internal
             }
         }
 
+        [Parameter]
+        public bool Dragger { get; set; }
+
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
 
@@ -70,13 +74,32 @@ namespace AntDesign.Internal
         private bool _disabled;
         private bool _disabledChanged;
 
+        private bool _dragHover;
+        private static EventCallbackFactory _eventCallbackFactory = new EventCallbackFactory();
+
         private UploadInfo _uploadInfo = new UploadInfo();
+
+        private IDictionary<string, object> _attributes = new Dictionary<string, object>();
 
         protected override bool ShouldRender() => Upload != null;
 
         protected override void OnInitialized()
         {
             _currentInstance = DotNetObjectReference.Create(this);
+
+            ClassMapper.Add("ant-upload")
+                .If("ant-upload-select", () => !Dragger)
+                .GetIf(() => $"ant-upload-select-{ListType}", () => !Dragger)
+                .If("ant-upload-drag", () => Dragger)
+                .If("ant-upload-drag-hover", () => Dragger && _dragHover)
+                ;
+
+            if (Dragger)
+            {
+                _attributes.Add("ondragenter", _eventCallbackFactory.Create(this, HadleOnDragEnter));
+                _attributes.Add("ondrop", _eventCallbackFactory.Create(this, HadleOnDrop));
+                _attributes.Add("ondragleave", _eventCallbackFactory.Create(this, HadleOnDrop));
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -205,6 +228,21 @@ namespace AntDesign.Internal
             {
                 await Upload.OnChange.InvokeAsync(_uploadInfo);
             }
+        }
+
+        public void HadleOnDragEnter()
+        {
+            _dragHover = true;
+        }
+
+        public void HadleOnDrop(DragEventArgs args)
+        {
+            _dragHover = false;
+        }
+
+        public void HadleOnDragLeave()
+        {
+            _dragHover = false;
         }
 
         protected override void Dispose(bool disposing)

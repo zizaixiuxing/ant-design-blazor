@@ -1,9 +1,18 @@
 ﻿@namespace AntDesign.Internal
-@inherits AntComponentBase
+@inherits AntDomComponentBase
 
-<div class="ant-upload ant-upload-select ant-upload-select-@(ListType)" style="@(!ShowButton?"display:none;":"")">
-    <span tabindex="0" class="ant-upload" @ref="_btn" data-fileid="@_fileId" role="button">
+<div class="@ClassMapper.Class" style="@(!ShowButton?"display:none;":"")">
+    <span tabindex="0" class="ant-upload @(Dragger?"ant-upload-btn":"")" @ref="_btn" data-fileid="@_fileId" role="button" @attributes="_attributes" >
         <input type="file" webkitdirectory="@Directory" multiple="@(Multiple || Directory)" @ref="_file" @onchange="FileNameChanged" accept="@Accept" style="display: none;" id="@_fileId" />
-        @ChildContent
+        @if (Dragger)
+        {
+            <div class="ant-upload-drag-container">
+                @ChildContent
+            </div>
+        }
+        else
+        {
+            @ChildContent
+        }
     </span>
 </div>

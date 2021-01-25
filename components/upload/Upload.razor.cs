@@ -19,6 +19,9 @@ namespace AntDesign
         public string Action { get; set; }
 
         [Parameter]
+        public bool Dragger { get; set; }
+
+        [Parameter]
         public bool Disabled { get; set; }
 
         [Parameter]

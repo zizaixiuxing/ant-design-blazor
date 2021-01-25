@@ -111,6 +111,17 @@ namespace AntDesign.Docs.Services
             return _showCaseCache.GetOrAdd(type, t =>
             {
                 var showCase = Type.GetType($"{Assembly.GetExecutingAssembly().GetName().Name}.{type}");
+                if (showCase == null)
+                {
+                    void NotFound(RenderTreeBuilder builder)
+                    {
+                        builder.OpenElement(0, "p");
+                        builder.AddContent(1, $"Type {type} not found");
+                        builder.CloseComponent();
+                    }
+
+                    return NotFound;
+                }
                 void ShowCase(RenderTreeBuilder builder)
                 {
                     builder.OpenComponent(0, showCase);
