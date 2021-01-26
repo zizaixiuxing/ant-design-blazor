@@ -79,7 +79,6 @@ namespace AntDesign.Internal
 
         private UploadInfo _uploadInfo = new UploadInfo();
 
-        private IDictionary<string, object> _attributes = new Dictionary<string, object>();
 
         protected override bool ShouldRender() => Upload != null;
 
@@ -93,13 +92,6 @@ namespace AntDesign.Internal
                 .If("ant-upload-drag", () => Dragger)
                 .If("ant-upload-drag-hover", () => Dragger && _dragHover)
                 ;
-
-            if (Dragger)
-            {
-                _attributes.Add("ondragenter", _eventCallbackFactory.Create(this, HadleOnDragEnter));
-                _attributes.Add("ondrop", _eventCallbackFactory.Create(this, HadleOnDrop));
-                _attributes.Add("ondragleave", _eventCallbackFactory.Create(this, HadleOnDrop));
-            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -230,17 +222,17 @@ namespace AntDesign.Internal
             }
         }
 
-        public void HadleOnDragEnter()
+        public void HandleOnDragEnter()
         {
             _dragHover = true;
         }
 
-        public void HadleOnDrop(DragEventArgs args)
+        public void HandleOnDrop(DragEventArgs args)
         {
             _dragHover = false;
         }
 
-        public void HadleOnDragLeave()
+        public void HandleOnDragLeave()
         {
             _dragHover = false;
         }
