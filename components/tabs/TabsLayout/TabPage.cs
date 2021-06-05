@@ -20,6 +20,12 @@ namespace AntDesign
 
         private object _instance;
 
+        public TabPage(string url, RenderFragment body)
+        {
+            this._url = url;
+            this._pageBody = body;
+        }
+
         public void BuildCustomBodyRenderer(Type pageType, IReadOnlyDictionary<string, object> routeValues)
         {
             this._pageType = pageType;
