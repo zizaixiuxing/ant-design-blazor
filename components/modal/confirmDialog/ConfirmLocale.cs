@@ -16,36 +16,36 @@ namespace AntDesign
         /// <summary>
         /// OK button text
         /// </summary>
-        public string OkText { get; set; } = "OK";
+        public string OkText { get; set; }
 
         /// <summary>
         /// Cancel button text
         /// </summary>
-        public string CancelText { get; set; } = "Cancel";
+        public string CancelText { get; set; }
 
         /// <summary>
         /// Yes button text
         /// </summary>
-        public string YesText { get; set; } = "Yes";
+        public string YesText { get; set; }
 
         /// <summary>
         /// No button text
         /// </summary>
-        public string NoText { get; set; } = "No";
+        public string NoText { get; set; }
 
         /// <summary>
         /// Retry button text
         /// </summary>
-        public string RetryText { get; set; } = "Retry";
+        public string RetryText { get; set; }
 
         /// <summary>
         /// Abort button text
         /// </summary>
-        public string AbortText { get; set; } = "Abort";
+        public string AbortText { get; set; }
 
         /// <summary>
         /// Ignore button text
         /// </summary>
-        public string IgnoreText { get; set; } = "Ignore";
+        public string IgnoreText { get; set; }
     }
 }

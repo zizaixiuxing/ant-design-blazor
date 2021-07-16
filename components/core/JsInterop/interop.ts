@@ -125,8 +125,7 @@ export function uploadFile(element, index, data, headers, fileId, url, name, ins
   const req = new XMLHttpRequest()
   req.onreadystatechange = function () {
     if (req.readyState === 4) {
-      // #1655 Any 2xx response code is okay
-      if (req.status < 200 || req.status > 299) {
+      if (req.status != 200) {
         instance.invokeMethodAsync(errorMethod, fileId, `{"status": ${req.status}}`);
         return;
       }

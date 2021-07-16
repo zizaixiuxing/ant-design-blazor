@@ -37,7 +37,7 @@ namespace AntDesign
                 _timer.Dispose();
                 if (OnFinish.HasDelegate)
                 {
-                    InvokeAsync(() => OnFinish.InvokeAsync(o));
+                    OnFinish.InvokeAsync(o);
                 }
             }
 

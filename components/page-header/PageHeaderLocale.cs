@@ -6,6 +6,6 @@ namespace AntDesign
 {
     public class PageHeaderLocale
     {
-        public string Back { get; set; } = "Back";
+        public string Back { get; set; }
     }
 }

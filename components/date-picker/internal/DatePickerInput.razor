@@ -12,7 +12,6 @@
                @onfocus="Onfocus"
                @onblur="OnBlur"
                @bind-value="@Value"
-               size="@HtmlInputSize"
                disabled="@Disabled"
                placeholder="@Placeholder"
                readonly="@ReadOnly">
@@ -54,7 +53,6 @@ else
                @onfocus="Onfocus"
                @onblur="OnBlur"
                @bind-value="@Value"
-               size="@HtmlInputSize"
                disabled="@Disabled"
                placeholder="@Placeholder"
                readonly="@ReadOnly">
@@ -116,9 +114,6 @@ else
 
     [Parameter]
     public bool ShowTime { get; set; } = false;
-
-    [Parameter]
-    public int HtmlInputSize { get; set; }
 
     [Parameter]
     public RenderFragment SuffixIcon { get; set; }

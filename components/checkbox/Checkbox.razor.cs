@@ -43,6 +43,7 @@ namespace AntDesign
         protected void SetClass()
         {
             ClassMapperLabel.Clear()
+                .Add(_prefixCls)
                 .Add($"{_prefixCls}-wrapper")
                 .If($"{_prefixCls}-wrapper-checked", () => Checked);
 

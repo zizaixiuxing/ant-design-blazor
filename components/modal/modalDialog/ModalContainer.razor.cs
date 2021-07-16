@@ -32,16 +32,12 @@ namespace AntDesign
 
         private async Task ModalService_OnModalCloseEvent(ModalRef modalRef)
         {
-            if (modalRef.Config.Visible)
+            modalRef.Config.Visible = false;
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(250);
+            if (modalRef.Config.DestroyOnClose && _modalRefs.Contains(modalRef))
             {
-                modalRef.Config.Visible = false;
-                await InvokeAsync(StateHasChanged);
-                await Task.Delay(250);
-                if (modalRef.Config.DestroyOnClose && _modalRefs.Contains(modalRef))
-                {
-                    _modalRefs.Remove(modalRef);
-                    await InvokeAsync(StateHasChanged);
-                }
+                _modalRefs.Remove(modalRef);
             }
         }
 

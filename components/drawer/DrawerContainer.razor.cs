@@ -60,16 +60,12 @@ namespace AntDesign
         /// </summary>
         private async Task DrawerService_OnClose(DrawerRef drawerRef)
         {
-            if (drawerRef.Config.Visible)
+            drawerRef.Config.Visible = false;
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(300);
+            if (_drawerRefs.Contains(drawerRef))
             {
-                drawerRef.Config.Visible = false;
-                await InvokeAsync(StateHasChanged);
-                await Task.Delay(300);
-                if (_drawerRefs.Contains(drawerRef))
-                {
-                    _drawerRefs.Remove(drawerRef);
-                }
-                await InvokeAsync(StateHasChanged);
+                _drawerRefs.Remove(drawerRef);
             }
         }
     }

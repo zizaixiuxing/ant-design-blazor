@@ -16,17 +16,8 @@
     }
 
     int diffDay = (int)Locale.FirstDayOfWeek - monthFirstDayOfWeek;
-    DateTime startDate;
-    int skipDays = 0;
-    if (monthFirstDayDate == DateTime.MinValue)
-    {
-        startDate = monthFirstDayDate;
-        skipDays = monthFirstDayOfWeek - (int)Locale.FirstDayOfWeek;
-    }
-    else
-    {
-        startDate = monthFirstDayDate.AddDays(diffDay);
-    }
+    DateTime startDate = monthFirstDayDate.AddDays(diffDay);
+
 }
 
 <div class='@($"{PrefixCls}-datetime-panel")' @ref="Ref">
@@ -43,8 +34,7 @@
                             IsSelected="date => DateHelper.IsSameDay(date, Value)"
                             GetColTitle='date => date.ToString(Locale.Lang.DateFormat, CultureInfo)'
                             OnValueSelect="OnSelectDate"
-                            GetNextColValue="date => DateHelper.AddDaysSafely(date, 1)"
-                            SkipDays="skipDays">
+                            GetNextColValue="date => DateHelper.AddDaysSafely(date, 1)">
             <RenderPickerHeader>
                 <DatePickerHeader TValue="TValue"
                                   @attributes="GetAttritubes()" />

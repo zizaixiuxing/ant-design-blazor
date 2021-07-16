@@ -52,15 +52,14 @@ namespace AntDesign
         /// Used to set gutter during pre-rendering
         /// </summary>
         [Parameter]
-        public BreakpointType DefaultBreakpoint { get; set; } = BreakpointType.Xxl;
+        public BreakpointType DefaultBreakpoint { get; set; }
 
         [Inject]
         public DomEventService DomEventService { get; set; }
 
-        private string _gutterStyle;
-        private BreakpointType _currentBreakPoint;
+        private string GutterStyle { get; set; }
 
-        private IList<Col> _cols = new List<Col>();
+        public IList<Col> Cols { get; } = new List<Col>();
 
         private static BreakpointType[] _breakpoints = new[] {
             BreakpointType.Xs,
@@ -107,18 +106,6 @@ namespace AntDesign
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        internal void AddCol(Col col)
-        {
-            this._cols.Add(col);
-            var gutter = this.GetGutter((_currentBreakPoint ?? DefaultBreakpoint).Name);
-            col.RowGutterChanged(gutter);
-        }
-
-        internal void RemoveCol(Col col)
-        {
-            this._cols.Remove(col);
-        }
-
         private async void OnResize(Window window)
         {
             OptimizeSize(window.innerWidth);
@@ -135,8 +122,6 @@ namespace AntDesign
                 }
             }
 
-            this._currentBreakPoint = actualBreakpoint;
-
             SetGutterStyle(actualBreakpoint.Name);
 
             if (OnBreakpoint.HasDelegate)
@@ -150,14 +135,14 @@ namespace AntDesign
         private void SetGutterStyle(string breakPoint)
         {
             var gutter = this.GetGutter(breakPoint);
-            _cols.ForEach(x => x.RowGutterChanged(gutter));
+            Cols.ForEach(x => x.RowGutterChanged(gutter));
 
-            _gutterStyle = "";
+            GutterStyle = "";
             if (gutter.horizontalGutter > 0)
             {
-                _gutterStyle = $"margin-left: -{gutter.horizontalGutter / 2}px; margin-right: -{gutter.horizontalGutter / 2}px; ";
+                GutterStyle = $"margin-left: -{gutter.horizontalGutter / 2}px; margin-right: -{gutter.horizontalGutter / 2}px; ";
             }
-            _gutterStyle += $"row-gap: {gutter.verticalGutter}px; ";
+            GutterStyle += $"row-gap: {gutter.verticalGutter}px; ";
 
             StateHasChanged();
         }

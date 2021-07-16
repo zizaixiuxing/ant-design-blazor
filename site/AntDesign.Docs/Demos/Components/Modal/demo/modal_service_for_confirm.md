@@ -13,6 +13,7 @@ title:
 
 ``` c#
 
+@using System.ComponentModel
 @inherits FeedbackComponent<string, string>
 
 <div>
@@ -33,17 +34,11 @@ title:
     }
 
 
-    public override async Task OnFeedbackOkAsync(ModalClosingEventArgs args)
+    public override async Task OkAsync(ModalClosingEventArgs args)
     {
         if (FeedbackRef is ConfirmRef confirmRef)
         {
             confirmRef.Config.OkButtonProps.Loading = true;
-            await confirmRef.UpdateConfigAsync();
-        }
-        else if (FeedbackRef is ModalRef modalRef)
-        {
-            modalRef.Config.ConfirmLoading = true;
-            await modalRef.UpdateConfigAsync();
         }
 
         await Task.Delay(1000);
@@ -51,22 +46,9 @@ title:
         if (value != config)
             args.Cancel = true;
         else
-            // method 1(not recommended): await (FeedbackRef as ConfirmRef<string>)!.OkAsync(value);
-            // method 2: await (FeedbackRef as IOkCancelRef<string>)!.OkAsync(value);
-            await base.OkCancelRefWithResult!.OnOk(value);
+            await (FeedbackRef as IFeedbackRef<string>)!.OkAsync(value);
 
-        await base.OnFeedbackOkAsync(args);
-    }
-
-    /// <summary>
-    /// If you want <b>Dispose</b> to take effect every time it is closed in Modal, which created by ModalService,
-    /// set <b>ModalOptions.DestroyOnClose = true</b>
-    /// </summary>
-    /// <param name="disposing"></param>
-    protected override void Dispose(bool disposing)
-    {
-        Console.WriteLine("Dispose");
-        base.Dispose(disposing);
+        await base.OkAsync(args);
     }
 }
 
@@ -79,6 +61,7 @@ Template code: ConfirmTemplateDemo.razor
 
 ``` c#
 
+@using System.ComponentModel
 @inherits FeedbackComponent<string, string>
 
 <div>
@@ -99,17 +82,11 @@ Template code: ConfirmTemplateDemo.razor
     }
 
 
-    public override async Task OnFeedbackOkAsync(ModalClosingEventArgs args)
+    public override async Task OkAsync(ModalClosingEventArgs args)
     {
         if (FeedbackRef is ConfirmRef confirmRef)
         {
             confirmRef.Config.OkButtonProps.Loading = true;
-            await confirmRef.UpdateConfigAsync();
-        }
-        else if (FeedbackRef is ModalRef modalRef)
-        {
-            modalRef.Config.ConfirmLoading = true;
-            await modalRef.UpdateConfigAsync();
         }
 
         await Task.Delay(1000);
@@ -117,22 +94,9 @@ Template code: ConfirmTemplateDemo.razor
         if (value != config)
             args.Cancel = true;
         else
-            // method 1(not recommended): await (FeedbackRef as ConfirmRef<string>)!.OkAsync(value);
-            // method 2: await (FeedbackRef as IOkCancelRef<string>)!.OkAsync(value);
-            await base.OkCancelRefWithResult!.OnOk(value);
+            await (FeedbackRef as IFeedbackRef<string>)!.OkAsync(value);
 
-        await base.OnFeedbackOkAsync(args);
-    }
-
-    /// <summary>
-    /// If you want <b>Dispose</b> to take effect every time it is closed in Modal, which created by ModalService,
-    /// set <b>ModalOptions.DestroyOnClose = true</b>
-    /// </summary>
-    /// <param name="disposing"></param>
-    protected override void Dispose(bool disposing)
-    {
-        Console.WriteLine("Dispose");
-        base.Dispose(disposing);
+        await base.OkAsync(args);
     }
 }
 

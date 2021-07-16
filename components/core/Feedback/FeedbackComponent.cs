@@ -49,22 +49,18 @@ namespace AntDesign
         }
 
         /// <summary>
-        /// Call back when OK button is triggered, which can be used to cancel closing
         /// 在 OK 按钮触发时回调，可以用来取消关闭
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Please replace it with OnFeedbackOkAsync")]
         public virtual Task OkAsync(ModalClosingEventArgs args)
         {
             return OnFeedbackOkAsync(args);
         }
 
         /// <summary>
-        /// Call back when Cancel button is triggered, which can be used to cancel closing
         /// 在 Cancel 按钮触发时回调，可以用来取消关闭
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Please replace it with OnFeedbackCancelAsync")]
         public virtual Task CancelAsync(ModalClosingEventArgs args)
         {
             return OnFeedbackCancelAsync(args);
@@ -72,7 +68,6 @@ namespace AntDesign
 
 
         /// <summary>
-        /// Call back when OK button is triggered, which can be used to cancel closing
         /// 在 OK 按钮触发时回调，可以用来取消关闭
         /// </summary>
         /// <returns></returns>
@@ -82,7 +77,6 @@ namespace AntDesign
         }
 
         /// <summary>
-        /// Call back when Cancel button is triggered, which can be used to cancel closing
         /// 在 Cancel 按钮触发时回调，可以用来取消关闭
         /// </summary>
         /// <param name="args"></param>
@@ -100,11 +94,9 @@ namespace AntDesign
     /// <typeparam name="TResult"></typeparam>
     public abstract class FeedbackComponent<TComponentOptions, TResult> : FeedbackComponent<TComponentOptions>
     {
-        private IOkCancelRef<TResult> _okCancelRefWithResult;
-
         /// <summary>
         /// 
         /// </summary>
-        public IOkCancelRef<TResult> OkCancelRefWithResult => _okCancelRefWithResult ??= FeedbackRef as IOkCancelRef<TResult>;
+        public IOkCancelRef<TResult> OkCancelRefWithResult => FeedbackRef as IOkCancelRef<TResult>;
     }
 }

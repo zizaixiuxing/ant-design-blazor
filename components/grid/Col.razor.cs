@@ -132,7 +132,7 @@ namespace AntDesign
 
         protected override void OnInitialized()
         {
-            this.Row?.AddCol(this);
+            this.Row?.Cols.Add(this);
 
             this.SetHostClassMap();
             this.SetHostFlexStyle();
@@ -142,7 +142,7 @@ namespace AntDesign
 
         protected override void Dispose(bool disposing)
         {
-            this.Row?.RemoveCol(this);
+            this.Row?.Cols.Remove(this);
 
             base.Dispose(disposing);
         }

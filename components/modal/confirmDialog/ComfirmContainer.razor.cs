@@ -65,14 +65,11 @@ namespace AntDesign
         /// <returns></returns>
         private async Task OnConfirmClose(ConfirmRef confirmRef)
         {
-            if (confirmRef.Config.Visible)
+            confirmRef.Config.Visible = false;
+            await InvokeAsync(StateHasChanged);
+            if (confirmRef.OnClose != null)
             {
-                confirmRef.Config.Visible = false;
-                await InvokeAsync(StateHasChanged);
-                if (confirmRef.OnClose != null)
-                {
-                    await confirmRef.OnClose.Invoke();
-                }
+                await confirmRef.OnClose.Invoke();
             }
         }
 
