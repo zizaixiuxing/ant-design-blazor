@@ -233,6 +233,7 @@ namespace AntDesign
             ChangePageSize(queryModel.PageSize);
 
             FlushCache();
+
             foreach (var column in queryModel.SortModel)
             {
                 List<IFieldColumn> fieldColumns = ColumnContext.HeaderColumns.Cast<IFieldColumn>().ToList();
@@ -243,8 +244,10 @@ namespace AntDesign
                     var filter = queryModel.FilterModel.Where(x => x.FieldName.Equals(fieldColumn.FieldName)).First();
                     fieldColumn.SetFilterModel((FilterModel<string>)filter);
                 }
+
                 fieldColumn.SetSortModel((SortModel<string>)column);
             }
+
             this.ReloadAndInvokeChange((QueryModel<TItem>)queryModel);
         }
 
