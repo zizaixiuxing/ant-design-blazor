@@ -337,7 +337,7 @@ namespace AntDesign
         private QueryModel<TItem> InternalReload()
         {
             var queryModel = BuildQueryModel();
-            _currentQueryModel = BuildQueryModel();
+            _currentQueryModel = queryModel;
 
             if (ServerSide)
             {
